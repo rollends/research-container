@@ -1,0 +1,1 @@
+docker build -t rollends.research-container:v1.0 .
