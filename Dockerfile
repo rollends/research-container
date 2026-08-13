@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-c"]
 
 # OS Package Installation.
 RUN apt-get update &&\
-    apt-get install -y build-essential curl git hunspell hunspell-en-ca imagemagick libffi-dev libffi8 libgmp10 libgmp-dev libncurses-dev locales pkg-config poppler-utils python3 python3-pip python3-venv rsync texlive-full zlib1g zlib1g-dev &&\
+    apt-get install -y build-essential curl git git-lfs hunspell hunspell-en-ca imagemagick libffi-dev libffi8 libgmp10 libgmp-dev libncurses-dev locales pkg-config poppler-utils python3 python3-pip python3-venv rsync texlive-full zlib1g zlib1g-dev &&\
     rm -rf /var/lib/apt/lists/* &&\
     localedef -i en_CA -c -f UTF-8 -A /usr/share/locale/locale.alias en_CA.UTF-8 &&\
     apt-get clean

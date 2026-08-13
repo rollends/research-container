@@ -1,1 +1,1 @@
-docker build -t rollends.research-container:v2.0 .
+docker build -t rollends.research-container:v2.1 .
