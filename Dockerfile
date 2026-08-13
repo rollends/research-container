@@ -48,3 +48,6 @@ SHELL ["/home/ubuntu/miniforge3/bin/conda", "run", "--live-stream", "-n", "sage"
 # Install the Sage Kernel.
 COPY install_sage_kernel.py /tmp/
 RUN python3 /tmp/install_sage_kernel.py
+
+# Force GPG TTY to be set.
+RUN echo "export GPG_TTY=$(tty)" >> /home/ubuntu/.bashrc
