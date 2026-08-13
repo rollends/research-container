@@ -11,6 +11,10 @@ RUN apt-get update &&\
     localedef -i en_CA -c -f UTF-8 -A /usr/share/locale/locale.alias en_CA.UTF-8 &&\
     apt-get clean
 
+RUN mkhomedir_helper ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu/
+
 ENV LANG=en_CA.utf8
 
 # Setting up the Haskell Install.
@@ -24,22 +28,22 @@ ENV BOOTSTRAP_HASKELL_HLS_VERSION="latest"
 
 # Install/Configure Haskell using ghcup
 RUN curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | /bin/bash
-RUN echo "source /root/.ghcup/env" >> /root/.bashrc
+RUN echo "source /home/ubuntu/.ghcup/env" >> /home/ubuntu/.bashrc
 
 # Install Conda.
 RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" &&\
     bash Miniforge3-$(uname)-$(uname -m).sh -b &&\
-    source /root/miniforge3/bin/activate &&\
+    source /home/ubuntu/miniforge3/bin/activate &&\
     conda init bash
 
 # Use a Conda activated environment as the default shell.
-SHELL ["/root/miniforge3/bin/conda", "run", "--live-stream", "/bin/bash", "-c"]
+SHELL ["/home/ubuntu/miniforge3/bin/conda", "run", "--live-stream", "/bin/bash", "-c"]
 
 # Install Sage in an environment named Sage.
 RUN conda create -n sage sage python=3.11 pytest sphinx furo
 
 # Ensure the Sage environment is used so that we can install the Sage (Jupyter) kernel.
-SHELL ["/root/miniforge3/bin/conda", "run", "--live-stream", "-n", "sage", "/bin/bash", "-c"]
+SHELL ["/home/ubuntu/miniforge3/bin/conda", "run", "--live-stream", "-n", "sage", "/bin/bash", "-c"]
 
 # Install the Sage Kernel.
 COPY install_sage_kernel.py /tmp/
