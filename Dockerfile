@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-c"]
 
 # OS Package Installation.
 RUN apt-get update &&\
-    apt-get install -y build-essential curl git git-lfs hunspell hunspell-en-ca imagemagick libffi-dev libffi8 libgmp10 libgmp-dev libncurses-dev locales pkg-config poppler-utils python3 python3-pip python3-venv rsync texlive-full zlib1g zlib1g-dev &&\
+    apt-get install -y build-essential curl git git-lfs hunspell hunspell-en-ca imagemagick libffi-dev libffi8 libgmp10 libgmp-dev libncurses-dev locales pinentry-tty pkg-config poppler-utils python3 python3-pip python3-venv rsync texlive-full zlib1g zlib1g-dev &&\
     rm -rf /var/lib/apt/lists/* &&\
     localedef -i en_CA -c -f UTF-8 -A /usr/share/locale/locale.alias en_CA.UTF-8 &&\
     apt-get clean
@@ -50,4 +50,4 @@ COPY install_sage_kernel.py /tmp/
 RUN python3 /tmp/install_sage_kernel.py
 
 # Force GPG TTY to be set.
-RUN echo "export GPG_TTY=$(tty)" >> /home/ubuntu/.bashrc
+RUN echo "export GPG_TTY=\$(tty)" >> /home/ubuntu/.bashrc
